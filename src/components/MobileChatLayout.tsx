@@ -16,6 +16,7 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import FriendRequestsSidebarOptions from "./FriendRequestsSidebarOptions";
 import { Icons } from "./Icons";
+import MeChat from "./MeChat";
 import SidebarChatList from "./SidebarChatList";
 import SignOutButton from "./SignOutButton";
 import Button, { buttonVariants } from "./ui/Button";
@@ -100,6 +101,7 @@ const MobileChatLayout: React.FC<MobileChatLayoutProps> = ({
                   </div>
                   <div className="relative mt-6 flex-1 px-4 sm:px-6">
                     {/* Your content */}
+
                     {friends.length > 0 ? (
                       <div className="text-xs font-semibold leading-6 text-gray-400">
                         Your chats
@@ -108,6 +110,9 @@ const MobileChatLayout: React.FC<MobileChatLayoutProps> = ({
 
                     <nav className="flex flex-1 flex-col">
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
+                        <li>
+                          <MeChat sessionId={session.user.id} />
+                        </li>
                         <li>
                           <SidebarChatList
                             friends={friends}
