@@ -39,13 +39,13 @@ export async function POST(req: Request) {
       return new Response("No friend request", { status: 400 });
     }
 
-    const [userRaw, friendRaw] = (await Promise.all([
-      fetchRedis("get", `user:${session.user.id}`),
-      fetchRedis("get", `user:${idToAdd}`),
-    ])) as [string, string];
+    // const [userRaw, friendRaw] = (await Promise.all([
+    //   fetchRedis("get", `user:${session.user.id}`),
+    //   fetchRedis("get", `user:${idToAdd}`),
+    // ])) as [string, string];
 
-    const user = JSON.parse(userRaw) as User;
-    const friend = JSON.parse(friendRaw) as User;
+    // const user = JSON.parse(userRaw) as User;
+    // const friend = JSON.parse(friendRaw) as User;
 
     // await Promise.all([
     //   pusherServer.trigger(
