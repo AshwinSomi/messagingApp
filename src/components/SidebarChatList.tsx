@@ -19,14 +19,17 @@ const SidebarChatList: React.FC<SidebarChatListProps> = ({
   const pathname = usePathname();
 
   const [unseenMessages, setUnseenMessages] = useState<Message[]>([]);
+  const [activeChats, setActiveChats] = useState<User[]>(friends);
 
   useEffect(() => {
     pusherClient.subscribe(toPusherKey(`user:${sessionId}:chats`));
 
     pusherClient.subscribe(toPusherKey(`user:${sessionId}:friends`));
 
+    // const newFriendHandler = (newFriend: User) => {
     const newFriendHandler = () => {
       router.refresh();
+      // setActiveChats((prev) => [...prev, newFriend]);
     };
 
     const chatHandler = (message: Message) => {

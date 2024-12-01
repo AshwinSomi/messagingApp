@@ -1,5 +1,6 @@
 import FriendRequestsSidebarOptions from "@/components/FriendRequestsSidebarOptions";
 import { Icons } from "@/components/Icons";
+import MeChat from "@/components/MeChat";
 import MobileChatLayout from "@/components/MobileChatLayout";
 import SidebarChatList from "@/components/SidebarChatList";
 import SignOutButton from "@/components/SignOutButton";
@@ -51,7 +52,7 @@ const Layout = async ({ children }: LayoutProps) => {
           unseenRequestCount={unseenRequestsCount}
         />
       </div>
-      <div className="hidden md:flex h-full w-ful max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 ">
+      <div className="hidden md:flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 ">
         <Link href="/dashboard" className="flex h-16 shrink-0 items-center ">
           <Icons.Logo className="h-8 text-indigo-600 " />
         </Link>
@@ -64,6 +65,7 @@ const Layout = async ({ children }: LayoutProps) => {
                   Your Chat
                 </div>
               ) : null}
+              <MeChat sessionId={session.user.id} />
               {/* <ul role="list" className="-mx-2 mt-2 space-y-1 ">
                 <li> */}
               <SidebarChatList sessionId={session.user.id} friends={friends} />

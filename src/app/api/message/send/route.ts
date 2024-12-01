@@ -45,9 +45,13 @@ export async function POST(req: Request) {
       message
     );
 
-    pusherServer.trigger(toPusherKey(`user:${friendId}:chats`), "new_message", {
-      ...message,
-    });
+    await pusherServer.trigger(
+      toPusherKey(`user:${friendId}:chats`),
+      "new_message",
+      {
+        ...message,
+      }
+    );
 
     // all valid, send the message
     await db.zadd(`chat:${chatId}:messages`, {

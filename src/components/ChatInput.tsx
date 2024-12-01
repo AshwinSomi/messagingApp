@@ -9,9 +9,10 @@ import Button from "./ui/Button";
 interface ChatInputProps {
   chatPartner: User;
   chatId: string;
+  me: boolean;
 }
 
-const ChatInput: React.FC<ChatInputProps> = ({ chatId, chatPartner }) => {
+const ChatInput: React.FC<ChatInputProps> = ({ me, chatId, chatPartner }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [input, setInput] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -47,7 +48,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ chatId, chatPartner }) => {
           rows={1}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder={`Message ${chatPartner.name}`}
+          placeholder={me ? "Message Mee" : `Message ${chatPartner.name}`}
           className="block w-full resize-none border-0 bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:py-1.5 sm:text-sm sm:leading-6 "
         />
         <div
