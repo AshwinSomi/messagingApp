@@ -7,11 +7,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Button from "./Button";
 
-interface AddFriendButtonProps {}
-
 type FormData = z.infer<typeof addFriendValidator>;
 
-const AddFriendButton: React.FC<AddFriendButtonProps> = ({}) => {
+const AddFriendButton: React.FC = () => {
   const [showSuccessState, setShowSuccessState] = useState<boolean>(false);
 
   const {

@@ -11,7 +11,7 @@ interface Chat {
 }
 
 interface Message {
-  id: String;
+  id: string;
   senderId: string;
   receivedId: string;
   text: string;
@@ -19,7 +19,7 @@ interface Message {
 }
 
 interface FriendRequest {
-  id: String;
+  id: string;
   senderId: string;
   receivedId: string;
 }

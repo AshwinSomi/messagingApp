@@ -5,7 +5,7 @@ import { z } from "zod";
 
 export async function POST(req: Request) {
   try {
-    const body = req.json();
+    const body = await req.json();
     const session = await getServerSession(authOptions);
 
     if (!session) {

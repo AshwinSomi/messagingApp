@@ -8,11 +8,11 @@ import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-interface pageProps {
-  params: {
-    chatId: string;
-  };
-}
+// interface pageProps {
+//   params: {
+//     chatId: string;
+//   };
+// }
 
 async function getChatMessages(chatId: string) {
   try {
@@ -29,11 +29,12 @@ async function getChatMessages(chatId: string) {
 
     return messages;
   } catch (error) {
+    console.log(error);
     notFound();
   }
 }
 
-const page = async ({ params }: pageProps) => {
+const Page = async ({ params }: { params: Promise<{ chatId: string }> }) => {
   const { chatId } = await params;
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -79,10 +80,14 @@ const page = async ({ params }: pageProps) => {
           </div>
         </div>
       </div>
-      <Messages initialMessages={initialMessages} sessionId={session.user.id} />
+      <Messages
+        chatId={chatId}
+        initialMessages={initialMessages}
+        sessionId={session.user.id}
+      />
       <ChatInput chatId={chatId} chatPartner={chatPartner} />
     </div>
   );
 };
 
-export default page;
+export default Page;

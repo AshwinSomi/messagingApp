@@ -1,21 +1,43 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { pusherClient } from "@/lib/pusher";
+import { cn, toPusherKey } from "@/lib/utils";
 import { Message } from "@/lib/validations/message";
 import { format } from "date-fns";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface MessagesProps {
   initialMessages: Message[];
   sessionId: string;
+  chatId: string;
 }
 
-const Messages: React.FC<MessagesProps> = ({ initialMessages, sessionId }) => {
+const Messages: React.FC<MessagesProps> = ({
+  chatId,
+  initialMessages,
+  sessionId,
+}) => {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const scrollDownRef = useRef<HTMLDivElement | null>(null);
 
   const formatTimestamp = (timestamp: number) => {
     return format(timestamp, "HH:mm");
   };
+
+  useEffect(() => {
+    pusherClient.subscribe(toPusherKey(`chat:${chatId}`));
+
+    const messageHandler = (message: Message) => {
+      setMessages((prev) => [message, ...prev]);
+    };
+
+    pusherClient.bind("incoming-messages", messageHandler);
+
+    return () => {
+      pusherClient.unsubscribe(toPusherKey(`chat:${chatId}`));
+
+      pusherClient.unbind("messages", messageHandler);
+    };
+  }, [chatId]);
 
   return (
     <div

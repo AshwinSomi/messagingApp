@@ -1,5 +1,7 @@
 "use client";
-import { chatHrefConstructor } from "@/lib/utils";
+import { pusherClient } from "@/lib/pusher";
+import { chatHrefConstructor, toPusherKey } from "@/lib/utils";
+// import { Message } from "@/lib/validations/message"; //i am not sure if this is right message input
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -17,6 +19,39 @@ const SidebarChatList: React.FC<SidebarChatListProps> = ({
   const pathname = usePathname();
 
   const [unseenMessages, setUnseenMessages] = useState<Message[]>([]);
+
+  useEffect(() => {
+    pusherClient.subscribe(toPusherKey(`user:${sessionId}:chats`));
+
+    pusherClient.subscribe(toPusherKey(`user:${sessionId}:friends`));
+
+    const newFriendHandler = () => {
+      router.refresh();
+    };
+
+    const chatHandler = (message: Message) => {
+      // console.log("new msg");
+      const shouldNotify =
+        pathname !==
+        `/dashboard/chat/${chatHrefConstructor(sessionId, message.senderId)}`;
+
+      // if already in that chat
+      if (!shouldNotify) return;
+
+      setUnseenMessages((prev) => [...prev, message]);
+    };
+
+    pusherClient.bind("new_message", chatHandler);
+    pusherClient.bind("new_friend", newFriendHandler);
+
+    return () => {
+      pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:chats`));
+      pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:friends`));
+
+      pusherClient.unbind("new_message", chatHandler);
+      pusherClient.unbind("new_friend", newFriendHandler);
+    };
+  }, [pathname, sessionId, router]);
 
   useEffect(() => {
     if (pathname?.includes("chat")) {

@@ -9,6 +9,13 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "1.5rem",
+      screens: {
+        "2xl": "1360px",
+      },
+    },
     extend: {
       colors: {
         background: "var(--background)",
