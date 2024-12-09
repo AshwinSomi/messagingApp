@@ -20,14 +20,6 @@ export async function POST(req: Request) {
 
     const friendId = session.user.id === userId1 ? userId2 : userId1;
 
-    //skipping verification of friends my cur user friend list
-
-    // const rawSender = (await fetchRedis(
-    //   "get",
-    //   `user:${session.user.id}`
-    // )) as string;
-    // const sender = JSON.parse(rawSender) as User;
-
     const timestamp = Date.now();
 
     const messageData: Message = {

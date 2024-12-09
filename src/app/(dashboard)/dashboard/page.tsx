@@ -7,6 +7,11 @@ const page = async ({}) => {
       </p>
       <ul className="pt-12 flex flex-col text-zinc-500 text-sm font-medium">
         <li>- lets you connect with your friend who is logged in</li>
+        <li>
+          - lets you chat by recording message or texting and sending it in text
+          form
+        </li>
+        <li>- Used audio to text LLM to transcribe</li>
         <li>- lets you accept and deny friend requests</li>
         <li>- sends friend requests to known email ids</li>
       </ul>
@@ -15,9 +20,9 @@ const page = async ({}) => {
           What&#39;s pending to implement
         </summary>
         <p>
-          Add a me chat, that let you chat to yourself
+          -Change db as the cloud is not interacting properly on Vercel.
           <br />
-          Implement voice recording that gets transcribed on post in chat
+          -optimize pub/sub model
         </p>
       </details>
     </div>
